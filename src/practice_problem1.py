@@ -42,8 +42,8 @@ def main():
 
     # run_test_init()
     # run_test_append_string()
-    run_test_double()
-    # run_test_shrink()
+    # run_test_double()
+    run_test_shrink()
     # run_test_double_then_shrink()
     # run_test_reset()
     # run_test_steal()
@@ -227,6 +227,8 @@ class Box(object):
         #######################################################################
 
     def shrink(self, new_volume):
+        self.volume = new_volume
+        return self.append_string(self.contents)
         """
         What comes in:
           -- self
