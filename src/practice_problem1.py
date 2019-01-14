@@ -43,11 +43,11 @@ def main():
     # run_test_init()
     # run_test_append_string()
     # run_test_double()
-    run_test_shrink()
+    # run_test_shrink()
     # run_test_double_then_shrink()
     # run_test_reset()
     # run_test_steal()
-    # run_test_get_history()
+    run_test_get_history()
     # run_test_combined_box()
 
 
@@ -65,7 +65,11 @@ class Box(object):
 
     def __init__(self, contents, volume):
         self.contents = contents
+        self.history = []
         self.volume = volume
+        self.begincon = contents
+        self.beginvol = volume
+        self.count = 0
         if len(self.contents)>self.volume:
             self.contents = ''
 
@@ -213,7 +217,7 @@ class Box(object):
           #                       contents that did NOT fit]
         """
         # ---------------------------------------------------------------------
-        # TODO: 4. Implement and test this function.
+        # Done: 4. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -228,7 +232,10 @@ class Box(object):
 
     def shrink(self, new_volume):
         self.volume = new_volume
-        return self.append_string(self.contents)
+        print (self.contents)
+        lo = self.contents[self.volume:]
+        self.contents =self.contents[:self.volume]
+        return lo
         """
         What comes in:
           -- self
@@ -264,7 +271,7 @@ class Box(object):
           :type new_volume: int
         """
         # ---------------------------------------------------------------------
-        # TODO: 5. Implement and test this function.
+        # Done: 5. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -277,6 +284,9 @@ class Box(object):
         # ---------------------------------------------------------------------
 
     def double_then_shrink(self, new_volume):
+        self.volume = self.double()
+        self.shrink(new_volume)
+        return self.volume - new_volume
         """
         What comes in:
           -- self
@@ -320,7 +330,7 @@ class Box(object):
           :type new_volume: int
         """
         # ---------------------------------------------------------------------
-        # TODO: 6. Implement and test this function.
+        # Done: 6. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -330,6 +340,13 @@ class Box(object):
         # ---------------------------------------------------------------------
 
     def reset(self):
+
+        self.contents = self.begincon
+        self.volume = self.beginvol
+        if len(self.contents)>self.volume:
+            self.contents = ''
+        self.count = self.count + 1
+
         """
         What comes in:
           -- self
@@ -339,7 +356,7 @@ class Box(object):
           when this Box was constructed.
         """
         # ---------------------------------------------------------------------
-        # TODO: 7. Implement and test this function.
+        # Done: 7. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -349,6 +366,8 @@ class Box(object):
         # ---------------------------------------------------------------------
 
     def steal(self, other_box):
+        other_box.contents = self.append_string(other_box.contents)
+
         """
         What comes in:
           -- self
@@ -367,7 +386,7 @@ class Box(object):
           :type other_box: Box
         """
         # ---------------------------------------------------------------------
-        # TODO: 8. Implement and test this function.
+        # Done: 8. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -381,6 +400,12 @@ class Box(object):
         #######################################################################
 
     def get_history(self):
+        if self.count == 1:
+            self.history.append(self.contents)
+            self.count = 0
+        return self.history
+
+
         """
         What comes in:
           -- self
@@ -410,7 +435,7 @@ class Box(object):
           #   h is now ['GoodGo', 'GoodBye']
         """
         # ---------------------------------------------------------------------
-        # TODO: 9. Implement and test this function.
+        # Done: 9. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
@@ -437,7 +462,7 @@ class Box(object):
           :type other_box: Box
         """
         # ---------------------------------------------------------------------
-        # TODO: 10. Implement and test this function.
+        # Done: 10. Implement and test this function.
         #     The testing code is already written for you (above).
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
